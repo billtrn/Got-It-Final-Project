@@ -13,6 +13,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 @app.route('/register', methods=['POST'])
 @load_data(UserSchema)
 def register(data):
+    try:
+        username = data['username']
+        password = data['password']
+    except KeyError:
+        raise BadRequestError('Missing Input')
     if UserModel.query.filter_by(username=data['username']).first():
         raise BadRequestError('An User with that name already exists')
 
@@ -28,6 +33,11 @@ def register(data):
 @app.route('/login', methods=['POST'])
 @load_data(UserSchema)
 def login(data):
+    try:
+        username = data['username']
+        password = data['password']
+    except KeyError:
+        raise BadRequestError('Missing Input')
     user = UserModel.query.filter_by(username=data['username']).first()
     if user and check_password_hash(user.hashed_password, data['password']):
         token = jwt.encode(

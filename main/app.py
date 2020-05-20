@@ -42,8 +42,6 @@ def load_data(schema):
                 data = schema().load(request.get_json())
             except ValidationError:
                 raise BadRequestError('Invalid Input')
-            except KeyError:
-                raise BadRequestError('Missing Input')
             return func(data=data, *args, **kwargs)
 
         return decorated

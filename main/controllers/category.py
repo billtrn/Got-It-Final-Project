@@ -23,6 +23,10 @@ def get_category(id):
 @app.route('/categories', methods=['POST'])
 @load_data(CategorySchema)
 def add_category(data):
+    try:
+        name = data['name']
+    except KeyError:
+        raise BadRequestError('Missing Input')
     if CategoryModel.query.filter_by(name=data['name']).first():
         raise BadRequestError('A Category with that name already exists')
 

@@ -22,9 +22,12 @@ def get_items(id):
 @load_data(ItemSchema)
 @get_user_id
 def add_item(user_id, id, data):
+    try:
+        name = data['name']
+    except KeyError:
+        raise BadRequestError('Missing Input')
     category = CategoryModel.query.filter_by(id=id).first()
     if category:
-        name = data['name']
         description = data['description']
         item = ItemModel(name, description, id, user_id)
         item.save_to_db()
@@ -50,6 +53,10 @@ def get_item(id, item_id):
 @load_data(ItemSchema)
 @get_user_id
 def update_item(user_id, data, id, item_id):
+    try:
+        name = data['name']
+    except KeyError:
+        raise BadRequestError('Missing Input')
     item = ItemModel.query.filter_by(id=item_id).first()
     category = CategoryModel.query.filter_by(id=id).first()
     if not category:

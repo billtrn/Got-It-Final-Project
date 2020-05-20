@@ -69,7 +69,7 @@ def test_login_valid(client, authentication, status_code):
                     'password': 'asdf'
                 },
                 400,
-                'Invalid Input'
+                'Missing Input'
         ),
         # Test case: Missing password
         (
@@ -77,7 +77,7 @@ def test_login_valid(client, authentication, status_code):
                     'username': 'bill'
                 },
                 400,
-                'Invalid Input'
+                'Missing Input'
         )
     ]
 )
