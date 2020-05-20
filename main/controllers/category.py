@@ -28,9 +28,10 @@ def get_category(category_id):
     """
 
     category = CategoryModel.query.filter_by(id=category_id).first()
-    if category:
-        return jsonify(CategorySchema().dump(category)), 200
-    raise NotFoundError('No Category with that ID')
+    if not category:
+        raise NotFoundError('No Category with that ID')
+
+    return jsonify(CategorySchema().dump(category)), 200
 
 
 @app.route('/categories', methods=['POST'])

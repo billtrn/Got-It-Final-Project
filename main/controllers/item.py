@@ -40,6 +40,7 @@ def add_item(user_id, category_id, data):
         name = data['name']
     except KeyError:
         raise BadRequestError('Missing Input')
+
     category = CategoryModel.query.filter_by(id=category_id).first()
     if not category:
         raise NotFoundError('No Category with that ID')
@@ -61,15 +62,16 @@ def get_item(category_id, item_id):
     Raise a BadRequestError if item does not belong to category
     """
 
-    item = ItemModel.query.filter_by(id=item_id).first()
     category = CategoryModel.query.filter_by(id=category_id).first()
     if not category:
         raise NotFoundError('No Category with that ID')
+
+    item = ItemModel.query.filter_by(id=item_id, category_id=category_id).first()
+
     if not item:
-        raise NotFoundError('No Item with that ID')
-    if item_id in [item.id for item in category.items.all()]:
-        return jsonify(ItemSchema().dump(item)), 200
-    raise BadRequestError('This item does not belong to this category')
+        raise NotFoundError('No items with that ID in this category')
+
+    return jsonify(ItemSchema().dump(item)), 200
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['PUT'])
@@ -91,21 +93,23 @@ def update_item(user_id, data, category_id, item_id):
         name = data['name']
     except KeyError:
         raise BadRequestError('Missing Input')
-    item = ItemModel.query.filter_by(id=item_id).first()
+
     category = CategoryModel.query.filter_by(id=category_id).first()
     if not category:
         raise NotFoundError('No Category with that ID')
+
+    item = ItemModel.query.filter_by(id=item_id, category_id=category_id).first()
+
     if not item:
-        raise NotFoundError('No Item with that ID')
-    if item_id in [item.id for item in category.items.all()]:
-        if item.user_id == user_id:
-            item.name = data['name']
-            item.description = data['description']
-            item.save_to_db()
-            return jsonify(ItemSchema().dump(item)), 200
-        else:
-            raise ForbiddenError('Not allowed to modify this item')
-    raise BadRequestError('This item does not belong to this category')
+        raise NotFoundError('No items with that ID in this category')
+
+    if item.user_id != user_id:
+        raise ForbiddenError('Not allowed to modify this item')
+
+    item.name = data['name']
+    item.description = data['description']
+    item.save_to_db()
+    return jsonify(ItemSchema().dump(item)), 200
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['DELETE'])
@@ -122,16 +126,17 @@ def delete_item(user_id, category_id, item_id):
     Raise a BadRequestError if item does not belong to category
     """
 
-    item = ItemModel.query.filter_by(id=item_id).first()
     category = CategoryModel.query.filter_by(id=category_id).first()
     if not category:
         raise NotFoundError('No Category with that ID')
+
+    item = ItemModel.query.filter_by(id=item_id, category_id=category_id).first()
+
     if not item:
-        raise NotFoundError('No Item with that ID')
-    if item_id in [item.id for item in category.items.all()]:
-        if item.user_id == user_id:
-            item.delete_from_db()
-            return json.dumps({'message': 'Item deleted successfully'}), 200
-        else:
-            raise ForbiddenError('Not allowed to modify this item')
-    raise BadRequestError('This item does not belong to this category')
+        raise NotFoundError('No items with that ID in this category')
+
+    if item.user_id != user_id:
+        raise ForbiddenError('Not allowed to modify this item')
+
+    item.delete_from_db()
+    return json.dumps({'message': 'Item deleted successfully'}), 200

@@ -113,7 +113,7 @@ def test_put_item_valid(client, authentication, category_id, item_id, data):
                     'description': '2005'
                 },
                 404,
-                'No Item with that ID'
+                'No items with that ID in this category'
         ),
         # Test case: Trying to update an item you did not post
         (

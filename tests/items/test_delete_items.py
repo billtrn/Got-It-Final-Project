@@ -39,7 +39,7 @@ def test_delete_item_valid(client):
                 random.choice(get_category_ids()),
                 max(get_item_ids()) + 1,
                 404,
-                'No Item with that ID'
+                'No items with that ID in this category'
         ),
         # Test case: Trying to delete an item you do not own
         (
