@@ -6,7 +6,7 @@ from main.app import ma
 
 class CategorySchema(ma.SQLAlchemySchema):
     id = fields.Int()
-    name = fields.Str(validate=Length(max=45))
+    name = fields.Str(required=True, validate=Length(max=45, error='Name must have under 45 characters.'))
     description = fields.Str()
 
     class Meta:

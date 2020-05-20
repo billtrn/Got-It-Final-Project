@@ -34,7 +34,7 @@ def test_register_valid(client, authentication, status_code):
                     'password': 'asdf'
                 },
                 400,
-                'Invalid Input'
+                'Not a valid string.'
         ),
         # Test case: Incorrect data type for password
         (
@@ -43,7 +43,7 @@ def test_register_valid(client, authentication, status_code):
                     'password': 1
                 },
                 400,
-                'Invalid Input'
+                'Not a valid string.'
         ),
         # Test case: Username already exists
         (
@@ -52,7 +52,7 @@ def test_register_valid(client, authentication, status_code):
                     'password': 'qwerty'
                 },
                 400,
-                'An User with that name already exists'
+                'An User with that name already exists.'
         ),
         # Test case: Missing username
         (
@@ -60,7 +60,7 @@ def test_register_valid(client, authentication, status_code):
                     'password': 'asdf'
                 },
                 400,
-                'Missing Input'
+                'Missing data for required field.'
         ),
         # Test case: Missing password
         (
@@ -68,7 +68,7 @@ def test_register_valid(client, authentication, status_code):
                     'username': 'willy'
                 },
                 400,
-                'Missing Input'
+                'Missing data for required field.'
         ),
 
         # Test case: Username is too long
@@ -78,7 +78,7 @@ def test_register_valid(client, authentication, status_code):
                     'password': 'asdf'
                 },
                 400,
-                'Invalid Input'
+                'Username must have under 45 characters.'
         ),
         # Test case: Password is too long
         (
@@ -87,7 +87,7 @@ def test_register_valid(client, authentication, status_code):
                     'password': 'billbillbillbillbillbillbillbillbillbillbillbillbillbillbill'
                 },
                 400,
-                'Invalid Input'
+                'Password must have under 45 characters.'
         ),
     ]
 )

@@ -20,13 +20,8 @@ def register(data):
     :return: username and id in json format. Raise a BadRequestError if input is missing or username already exists
     """
 
-    try:
-        username = data['username']
-        password = data['password']
-    except KeyError:
-        raise BadRequestError('Missing Input')
     if UserModel.query.filter_by(username=data['username']).first():
-        raise BadRequestError('An User with that name already exists')
+        raise BadRequestError('An User with that name already exists.')
 
     hashed_password = generate_password_hash(data.pop('password'))
     data['hashed_password'] = hashed_password
@@ -46,11 +41,6 @@ def login(data):
     Raise a BadRequestError if input is missing or credentials is invalid
     """
 
-    try:
-        username = data['username']
-        password = data['password']
-    except KeyError:
-        raise BadRequestError('Missing Input')
     user = UserModel.query.filter_by(username=data['username']).first()
     if user and check_password_hash(user.hashed_password, data['password']):
         token = jwt.encode(
@@ -60,4 +50,4 @@ def login(data):
 
         authentication = {'username': data['username'], 'access_token': token, 'id': user.id}
         return jsonify(UserAuthenticationSchema().dump(authentication)), 200
-    raise UnauthorizedError('Invalid Credentials')
+    raise UnauthorizedError('Invalid credentials.')

@@ -43,8 +43,10 @@ def load_data(schema):
         def decorated(*args, **kwargs):
             try:
                 data = schema().load(request.get_json())
-            except ValidationError:
-                raise BadRequestError('Invalid Input')
+            except ValidationError as error:
+                message = list(error.messages.values())[0][0]
+                raise BadRequestError(message)
+
             return func(data=data, *args, **kwargs)
 
         return decorated

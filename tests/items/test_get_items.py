@@ -22,6 +22,6 @@ def test_get_items_invalid(client):
     response, json_response = get_items(client, category_id)
 
     assert response.status_code == 404
-    assert json_response['description'] == 'No Category with that ID'
+    assert json_response['description'] == 'No Category with that ID.'
 
 

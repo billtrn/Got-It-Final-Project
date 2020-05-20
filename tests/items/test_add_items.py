@@ -50,7 +50,7 @@ def test_post_items_valid(client, authentication, category_id, data):
                     'description': '2020'
                 },
                 400,
-                'Invalid Input'
+                'Not a valid string.'
         ),
         # Test case: Incorrect data type for description
         (
@@ -61,7 +61,7 @@ def test_post_items_valid(client, authentication, category_id, data):
                     'description': []
                 },
                 400,
-                'Invalid Input'
+                'Not a valid string.'
         ),
         # Test case: Missing name
         (
@@ -71,7 +71,7 @@ def test_post_items_valid(client, authentication, category_id, data):
                     'description': 'Loki'
                 },
                 400,
-                'Missing Input'
+                'Missing data for required field.'
         ),
         # Test case: Name is too long
         (
@@ -82,7 +82,7 @@ def test_post_items_valid(client, authentication, category_id, data):
                     'description': '1975'
                 },
                 400,
-                'Invalid Input'
+                'Name must have under 45 characters.'
         ),
         # Test case: Category not found
         (
@@ -93,7 +93,7 @@ def test_post_items_valid(client, authentication, category_id, data):
                     'description': '1999'
                 },
                 404,
-                'No Category with that ID'
+                'No Category with that ID.'
         ),
     ]
 )

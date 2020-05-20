@@ -34,7 +34,7 @@ def test_login_valid(client, authentication, status_code):
                     'password': 'asdf'
                 },
                 400,
-                'Invalid Input'
+                'Not a valid string.'
         ),
         # Test case: Incorrect data type for password
         (
@@ -43,7 +43,7 @@ def test_login_valid(client, authentication, status_code):
                     'password': []
                 },
                 400,
-                'Invalid Input'
+                'Not a valid string.'
         ),
         # Test case: Username does not exist
         (
@@ -52,7 +52,7 @@ def test_login_valid(client, authentication, status_code):
                     'password': 'asdf'
                 },
                 401,
-                'Invalid Credentials'
+                'Invalid credentials.'
         ),
         # Test case: Wrong password
         (
@@ -61,7 +61,7 @@ def test_login_valid(client, authentication, status_code):
                     'password': '1111'
                 },
                 401,
-                'Invalid Credentials'
+                'Invalid credentials.'
         ),
         # Test case: Missing username
         (
@@ -69,7 +69,7 @@ def test_login_valid(client, authentication, status_code):
                     'password': 'asdf'
                 },
                 400,
-                'Missing Input'
+                'Missing data for required field.'
         ),
         # Test case: Missing password
         (
@@ -77,7 +77,7 @@ def test_login_valid(client, authentication, status_code):
                     'username': 'bill'
                 },
                 400,
-                'Missing Input'
+                'Missing data for required field.'
         )
     ]
 )

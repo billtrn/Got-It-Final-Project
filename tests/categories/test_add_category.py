@@ -45,7 +45,7 @@ def test_add_categories_valid(client, data, status_code):
                     'description': 'abc'
                 },
                 400,
-                'Invalid Input'
+                'Not a valid string.'
         ),
         # Test case: Incorrect data type for description
         (
@@ -54,7 +54,7 @@ def test_add_categories_valid(client, data, status_code):
                     'description': []
                 },
                 400,
-                'Invalid Input'
+                'Not a valid string.'
         ),
         # Test case: Missing name
         (
@@ -62,7 +62,7 @@ def test_add_categories_valid(client, data, status_code):
                     'description': '1997'
                 },
                 400,
-                'Missing Input'
+                'Missing data for required field.'
         ),
         # Test case: Name is too long
         (
@@ -71,7 +71,7 @@ def test_add_categories_valid(client, data, status_code):
                     'description': 'asdf'
                 },
                 400,
-                'Invalid Input'
+                'Name must have under 45 characters.'
         ),
         # Test case: Category name already exists
         (

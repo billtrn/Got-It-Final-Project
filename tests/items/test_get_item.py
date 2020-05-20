@@ -28,14 +28,14 @@ def test_get_item_valid(client):
                 max(get_category_ids()) + 1,
                 random.choice(get_item_ids()),
                 404,
-                'No Category with that ID'
+                'No Category with that ID.'
         ),
         # Test case: Item not found
         (
                 random.choice(get_category_ids()),
                 max(get_item_ids()) + 1,
                 404,
-                'No items with that ID in this category'
+                'No items with that ID in this category.'
         ),
     ]
 )

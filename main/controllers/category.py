@@ -44,10 +44,6 @@ def add_category(data):
     Raise a BadRequestError if that name already exists or input is missing
     """
 
-    try:
-        name = data['name']
-    except KeyError:
-        raise BadRequestError('Missing Input')
     if CategoryModel.query.filter_by(name=data['name']).first():
         raise BadRequestError('A Category with that name already exists')
 
