@@ -9,6 +9,7 @@ def register_user(client, information):
     :param information
     :param client
     """
+
     response = client.post(
         '/register',
         headers=create_request_headers(),
@@ -24,6 +25,7 @@ def authorize_user(client, authentication):
     :param authentication
     :param client
     """
+
     response = client.post(
         '/login',
         headers=create_request_headers(),

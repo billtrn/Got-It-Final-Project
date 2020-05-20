@@ -16,6 +16,7 @@ def get_items(id):
     :param: category's id
     :return: information about all items in that category. Raise a NotFoundError if cannot find the category
     """
+
     category = CategoryModel.query.filter_by(id=id).first()
     if category:
         return jsonify(ItemSchema(many=True, only=('id', 'name', 'description')).dump(category.items)), 200
@@ -32,6 +33,7 @@ def add_item(user_id, id, data):
     :param: category's id, user's id, item's information
     :return: created item's information. Raise a NotFoundError if cannot find the category
     """
+
     try:
         name = data['name']
     except KeyError:
@@ -55,6 +57,7 @@ def get_item(id, item_id):
     Raise a NotFoundError if cannot find item or category with that id
     Raise a BadRequestError if item does not belong to category
     """
+
     item = ItemModel.query.filter_by(id=item_id).first()
     category = CategoryModel.query.filter_by(id=id).first()
     if not category:
@@ -80,6 +83,7 @@ def update_item(user_id, data, id, item_id):
     Raise a ForbiddenError if not allowed to update this item
     Raise a BadRequestError if item does not belong to category
     """
+
     try:
         name = data['name']
     except KeyError:
@@ -114,6 +118,7 @@ def delete_item(user_id, id, item_id):
     Raise a ForbiddenError if not allowed to delete this item
     Raise a BadRequestError if item does not belong to category
     """
+
     item = ItemModel.query.filter_by(id=item_id).first()
     category = CategoryModel.query.filter_by(id=id).first()
     if not category:

@@ -18,6 +18,7 @@ def register(data):
     :param: user's username and password
     :return: username and id in json format. Raise a BadRequestError if input is missing or username already exists
     """
+
     try:
         username = data['username']
         password = data['password']
@@ -44,6 +45,7 @@ def login(data):
     :return: username, token, and id in json format.
     Raise a BadRequestError if input is missing or credentials is invalid
     """
+
     try:
         username = data['username']
         password = data['password']

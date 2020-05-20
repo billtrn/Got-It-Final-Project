@@ -32,6 +32,7 @@ def create_request_headers(access_token=None):
     :param access_token
     :return: a dictionary of headers
     """
+
     header = {'Content-Type': 'application/json'}
     if access_token:
         header['Authorization'] = '{}'.format(access_token)
@@ -44,4 +45,5 @@ def load_decoded_response(response):
     :param response
     :return: response in dictionary format
     """
+
     return json.loads(response.data.decode('utf-8'))

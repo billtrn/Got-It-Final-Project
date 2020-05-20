@@ -11,6 +11,7 @@ def init_categories():
     """
     Initiate category table
     """
+
     categories = [
         {
             'name': 'Films',
@@ -34,6 +35,7 @@ def init_users():
     """
     Initiate user table
     """
+
     users = [
         {
             'username': 'bill',
@@ -56,6 +58,7 @@ def init_items():
     """
     Initiate item table
     """
+
     items = [
         {
             'name': 'Shawshank Redemption',
@@ -78,6 +81,7 @@ def drop_tables():
     """
     Drop all tables to refresh
     """
+
     engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
     ItemModel.__table__.drop(engine)
     CategoryModel.__table__.drop(engine)

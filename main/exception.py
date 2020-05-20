@@ -5,6 +5,7 @@ class BaseError(Exception):
     """
     Base class for all exceptions
     """
+
     status_code = None
     message = None
 

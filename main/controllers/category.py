@@ -12,6 +12,7 @@ def get_categories():
     Get all categories
     :return: all categories in json format
     """
+
     categories = CategoryModel.query.all()
     return jsonify(CategorySchema(many=True, only=('id', 'name', 'description')).dump(categories)), 200
 
@@ -24,6 +25,7 @@ def get_category(id):
     :return: category's name and description in json.
     Raise a NotFoundError if cannot find item or category with that id
     """
+
     category = CategoryModel.query.filter_by(id=id).first()
     if category:
         return jsonify(CategorySchema().dump(category)), 200
@@ -39,6 +41,7 @@ def add_category(data):
     :return: created category's name and description in json
     Raise a BadRequestError if that name already exists or input is missing
     """
+
     try:
         name = data['name']
     except KeyError:

@@ -23,6 +23,7 @@ def token_required(func):
     Check if the  access token is valid.
     :return: Raise a BadRequestError if the token is missing or invalid
     """
+
     @functools.wraps(func)
     def decorated(*args, **kwargs):
         try:
@@ -46,6 +47,7 @@ def load_data(schema):
     :param schema: The Schema used to deserialize
     :return: the deserialized data
     """
+
     def wrapper(func):
         @functools.wraps(func)
         def decorated(*args, **kwargs):
@@ -65,6 +67,7 @@ def get_user_id(func):
     Get user_id based on the provided jwt token.
     :return: user_id if the access_token passed is valid. Raise a BadRequestError otherwise.
     """
+
     @functools.wraps(func)
     def decorated(*args, **kwargs):
         try:
