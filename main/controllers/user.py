@@ -17,7 +17,7 @@ def register(data):
     """
     Allow user to register
     :param: user's username and password
-    :return: username and id in json format. Raise a BadRequestError if input is missing or username already exists
+    :return: username and id in json format. Raise a BadRequestError if username already exists
     """
 
     if UserModel.query.filter_by(username=data['username']).first():
@@ -38,7 +38,7 @@ def login(data):
     Allow user to log in to an existing account
     :param: user's username and password
     :return: username, token, and id in json format.
-    Raise a BadRequestError if input is missing or credentials is invalid
+    Raise a BadRequestError if credentials is invalid
     """
 
     user = UserModel.query.filter_by(username=data['username']).first()

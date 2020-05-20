@@ -24,7 +24,7 @@ def get_category(category_id):
     Get information about a category
     :param: category's id
     :return: category's name and description in json.
-    Raise a NotFoundError if cannot find item or category with that id
+    Raise a NotFoundError if cannot find category with that id
     """
 
     category = CategoryModel.query.filter_by(id=category_id).first()
@@ -41,7 +41,7 @@ def add_category(data):
     Post a new category
     :param: category's name and description
     :return: created category's name and description in json
-    Raise a BadRequestError if that name already exists or input is missing
+    Raise a BadRequestError if that name already exists
     """
 
     if CategoryModel.query.filter_by(name=data['name']).first():
