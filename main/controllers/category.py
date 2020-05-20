@@ -1,6 +1,6 @@
 from flask import jsonify
 
-from main.app import app, token_required, load_data
+from main.app import app, load_data
 from main.models.category import CategoryModel
 from main.schemas.category import CategorySchema
 from main.exception import NotFoundError, BadRequestError

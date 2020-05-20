@@ -1,5 +1,6 @@
 import json
 import random
+
 import pytest
 
 from tests.actions import get_access_token

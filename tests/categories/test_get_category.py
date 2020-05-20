@@ -1,5 +1,6 @@
-from tests.helpers import create_request_headers, load_decoded_response, get_category_ids
 import random
+
+from tests.helpers import create_request_headers, load_decoded_response, get_category_ids
 
 
 def get_category(client, category_id):

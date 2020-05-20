@@ -1,5 +1,6 @@
-import pytest
 import json
+
+import pytest
 
 from tests.helpers import create_request_headers, load_decoded_response
 

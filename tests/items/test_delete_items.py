@@ -1,5 +1,7 @@
-import pytest
 import random
+
+import pytest
+
 from tests.actions import get_access_token
 from tests.helpers import create_request_headers, load_decoded_response, get_category_ids, get_item_ids
 
