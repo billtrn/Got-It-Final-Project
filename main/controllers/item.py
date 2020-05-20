@@ -59,7 +59,6 @@ def get_item(category_id, item_id):
     :return:
     Information about the item.
     Raise a NotFoundError if cannot find item or category with that id
-    Raise a BadRequestError if item does not belong to category
     """
 
     category = CategoryModel.query.filter_by(id=category_id).first()
@@ -86,7 +85,6 @@ def update_item(user_id, data, category_id, item_id):
     Information about updated item in json if succeed
     Raise a NotFoundError if cannot find item or category with that id
     Raise a ForbiddenError if not allowed to update this item
-    Raise a BadRequestError if item does not belong to category
     """
 
     try:
@@ -123,7 +121,6 @@ def delete_item(user_id, category_id, item_id):
     Success message in json if succeed
     Raise a NotFoundError if cannot find item or category with that id
     Raise a ForbiddenError if not allowed to delete this item
-    Raise a BadRequestError if item does not belong to category
     """
 
     category = CategoryModel.query.filter_by(id=category_id).first()
