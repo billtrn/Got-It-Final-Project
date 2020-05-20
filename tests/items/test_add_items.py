@@ -20,7 +20,7 @@ def add_items(client, authentication=None, category_id=None, data=None):
 @pytest.mark.parametrize(
     'authentication, category_id, data',
     [
-        # Test case: Book name does not exist
+        # Test case: Name does not exist
         (
                 {'username': 'bill', 'password': 'asdf'},
                 1,

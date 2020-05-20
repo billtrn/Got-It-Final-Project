@@ -8,6 +8,7 @@ class DevelopmentConfig(Config):
     # Flask
     DEBUG = True
 
+    # Pytest
     TESTING = False
 
 

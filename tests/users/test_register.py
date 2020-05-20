@@ -65,7 +65,7 @@ def test_register_valid(client, authentication, status_code):
         # Test case: Missing password
         (
                 {
-                    'username': 'brian123'
+                    'username': 'willy'
                 },
                 400,
                 'Missing Input'

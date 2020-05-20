@@ -14,6 +14,7 @@ def app_setup():
         drop_tables()
     except:
         pass
+    # Create all tables and initiate them
     db.create_all(app=app)
     with app.app_context():
         init_categories()
@@ -24,4 +25,5 @@ def app_setup():
 
 @pytest.fixture
 def client(app_setup):
+    # Set up client to send requests
     return app_setup.test_client()

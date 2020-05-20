@@ -11,12 +11,18 @@ from main.exception import BadRequestError, BaseError
 from main.db import db
 
 
+# Create our Flask app and update configurations
 app = Flask(__name__)
 app.config.from_object(config)
+# Initialize our Flask app with this database setup
 db.init_app(app)
 
 
 def token_required(func):
+    """
+    Check if the  access token is valid.
+    :return: Raise a BadRequestError if the token is missing or invalid
+    """
     @functools.wraps(func)
     def decorated(*args, **kwargs):
         try:
@@ -35,6 +41,11 @@ def token_required(func):
 
 
 def load_data(schema):
+    """
+    Deserialize a request using a specified Schema
+    :param schema: The Schema used to deserialize
+    :return: the deserialized data
+    """
     def wrapper(func):
         @functools.wraps(func)
         def decorated(*args, **kwargs):
@@ -50,6 +61,10 @@ def load_data(schema):
 
 
 def get_user_id(func):
+    """
+    Get user_id based on the provided jwt token.
+    :return: user_id if the access_token passed is valid. Raise a BadRequestError otherwise.
+    """
     @functools.wraps(func)
     def decorated(*args, **kwargs):
         try:
@@ -68,6 +83,7 @@ def get_user_id(func):
     return decorated
 
 
+# Register error handler for our Flask app
 @app.errorhandler(BaseError)
 def handle_customized_error(e):
     return e.messages()

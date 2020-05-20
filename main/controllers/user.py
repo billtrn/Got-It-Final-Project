@@ -13,6 +13,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 @app.route('/register', methods=['POST'])
 @load_data(UserSchema)
 def register(data):
+    """
+    Allow user to register
+    :param: user's username and password
+    :return: username and id in json format. Raise a BadRequestError if input is missing or username already exists
+    """
     try:
         username = data['username']
         password = data['password']
@@ -33,6 +38,12 @@ def register(data):
 @app.route('/login', methods=['POST'])
 @load_data(UserSchema)
 def login(data):
+    """
+    Allow user to log in to an existing account
+    :param: user's username and password
+    :return: username, token, and id in json format.
+    Raise a BadRequestError if input is missing or credentials is invalid
+    """
     try:
         username = data['username']
         password = data['password']

@@ -8,6 +8,9 @@ from main.models.user import UserModel
 
 
 def init_categories():
+    """
+    Initiate category table
+    """
     categories = [
         {
             'name': 'Films',
@@ -28,6 +31,9 @@ def init_categories():
 
 
 def init_users():
+    """
+    Initiate user table
+    """
     users = [
         {
             'username': 'bill',
@@ -47,6 +53,9 @@ def init_users():
 
 
 def init_items():
+    """
+    Initiate item table
+    """
     items = [
         {
             'name': 'Shawshank Redemption',
@@ -66,6 +75,9 @@ def init_items():
 
 
 def drop_tables():
+    """
+    Drop all tables to refresh
+    """
     engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
     ItemModel.__table__.drop(engine)
     CategoryModel.__table__.drop(engine)

@@ -58,7 +58,7 @@ def test_add_categories_valid(client, data, status_code):
         # Test case: Missing name
         (
                 {
-                    'description': '19th-century Russian novelist.'
+                    'description': '1997'
                 },
                 400,
                 'Missing Input'

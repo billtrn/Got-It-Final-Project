@@ -4,6 +4,11 @@ from tests.helpers import create_request_headers, load_decoded_response
 
 
 def register_user(client, information):
+    """
+    Send request to register user
+    :param information
+    :param client
+    """
     response = client.post(
         '/register',
         headers=create_request_headers(),
@@ -14,6 +19,11 @@ def register_user(client, information):
 
 
 def authorize_user(client, authentication):
+    """
+    Send request to log in user
+    :param authentication
+    :param client
+    """
     response = client.post(
         '/login',
         headers=create_request_headers(),

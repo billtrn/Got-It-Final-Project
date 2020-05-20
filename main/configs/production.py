@@ -8,6 +8,7 @@ class ProductionConfig(Config):
     # Flask
     DEBUG = False
 
+    # Pytest
     TESTING = False
 
 

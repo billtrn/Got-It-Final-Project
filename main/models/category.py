@@ -2,6 +2,9 @@ from main.db import db
 
 
 class CategoryModel(db.Model):
+    """
+    Category Model
+    """
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(45))
