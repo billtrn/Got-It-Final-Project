@@ -131,7 +131,8 @@ def test_put_item_valid(client, authentication, category_id, item_id, data):
 )
 def test_put_item_with_invalid_data(client, authentication, category_id, item_id, data, status_code, description):
     response, json_response = put_item(
-        client, authentication=authentication, category_id=category_id, item_id=item_id, data=data)
+        client, authentication=authentication,
+        category_id=category_id, item_id=item_id, data=data)
 
     assert response.status_code == status_code
     assert json_response['description'] == description

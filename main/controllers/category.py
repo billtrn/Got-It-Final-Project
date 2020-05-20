@@ -1,9 +1,10 @@
 from flask import jsonify
 
-from main.app import app, load_data
+from main.app import app
 from main.models.category import CategoryModel
 from main.schemas.category import CategorySchema
 from main.exception import NotFoundError, BadRequestError
+from main.helpers import load_data
 
 
 @app.route('/categories', methods=['GET'])
@@ -14,19 +15,19 @@ def get_categories():
     """
 
     categories = CategoryModel.query.all()
-    return jsonify(CategorySchema(many=True, only=('id', 'name', 'description')).dump(categories)), 200
+    return jsonify(CategorySchema(many=True).dump(categories)), 200
 
 
-@app.route('/categories/<int:id>', methods=['GET'])
-def get_category(id):
+@app.route('/categories/<int:category_id>', methods=['GET'])
+def get_category(category_id):
     """
     Get information about a category
-    :param: category id
+    :param: category's id
     :return: category's name and description in json.
     Raise a NotFoundError if cannot find item or category with that id
     """
 
-    category = CategoryModel.query.filter_by(id=id).first()
+    category = CategoryModel.query.filter_by(id=category_id).first()
     if category:
         return jsonify(CategorySchema().dump(category)), 200
     raise NotFoundError('No Category with that ID')

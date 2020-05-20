@@ -1,7 +1,7 @@
 from marshmallow import fields
 from marshmallow.validate import Length
 
-from main.ma import ma
+from main.app import ma
 
 
 class ItemSchema(ma.SQLAlchemySchema):

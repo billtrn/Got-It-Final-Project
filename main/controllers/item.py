@@ -2,32 +2,34 @@ import json
 
 from flask import jsonify
 
-from main.app import app, token_required, load_data, get_user_id
+from main.app import app
 from main.models.item import ItemModel
 from main.schemas.item import ItemSchema
 from main.models.category import CategoryModel
 from main.exception import NotFoundError, BadRequestError, ForbiddenError
+from main.helpers import token_required, load_data, get_user_id
 
 
-@app.route('/categories/<int:id>/items', methods=['GET'])
-def get_items(id):
+@app.route('/categories/<int:category_id>/items', methods=['GET'])
+def get_items(category_id):
     """
     Get all items in a category
     :param: category's id
     :return: information about all items in that category. Raise a NotFoundError if cannot find the category
     """
 
-    category = CategoryModel.query.filter_by(id=id).first()
-    if category:
-        return jsonify(ItemSchema(many=True, only=('id', 'name', 'description')).dump(category.items)), 200
-    raise NotFoundError('No Category with that ID')
+    category = CategoryModel.query.filter_by(id=category_id).first()
+    if not category:
+        raise NotFoundError('No Category with that ID')
+
+    return jsonify(ItemSchema(many=True).dump(category.items)), 200
 
 
-@app.route('/categories/<int:id>/items', methods=['POST'])
+@app.route('/categories/<int:category_id>/items', methods=['POST'])
 @token_required
 @load_data(ItemSchema)
 @get_user_id
-def add_item(user_id, id, data):
+def add_item(user_id, category_id, data):
     """
     Post a new item to a category
     :param: category's id, user's id, item's information
@@ -38,17 +40,18 @@ def add_item(user_id, id, data):
         name = data['name']
     except KeyError:
         raise BadRequestError('Missing Input')
-    category = CategoryModel.query.filter_by(id=id).first()
-    if category:
-        description = data['description']
-        item = ItemModel(name, description, id, user_id)
-        item.save_to_db()
-        return jsonify(ItemSchema().dump(item)), 201
-    raise NotFoundError('No Category with that ID')
+    category = CategoryModel.query.filter_by(id=category_id).first()
+    if not category:
+        raise NotFoundError('No Category with that ID')
+
+    description = data['description']
+    item = ItemModel(name, description, category_id, user_id)
+    item.save_to_db()
+    return jsonify(ItemSchema().dump(item)), 201
 
 
-@app.route('/categories/<int:id>/items/<int:item_id>', methods=['GET'])
-def get_item(id, item_id):
+@app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['GET'])
+def get_item(category_id, item_id):
     """
     Get an item in a category
     :param: category's id, item's id
@@ -59,7 +62,7 @@ def get_item(id, item_id):
     """
 
     item = ItemModel.query.filter_by(id=item_id).first()
-    category = CategoryModel.query.filter_by(id=id).first()
+    category = CategoryModel.query.filter_by(id=category_id).first()
     if not category:
         raise NotFoundError('No Category with that ID')
     if not item:
@@ -69,11 +72,11 @@ def get_item(id, item_id):
     raise BadRequestError('This item does not belong to this category')
 
 
-@app.route('/categories/<int:id>/items/<int:item_id>', methods=['PUT'])
+@app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['PUT'])
 @token_required
 @load_data(ItemSchema)
 @get_user_id
-def update_item(user_id, data, id, item_id):
+def update_item(user_id, data, category_id, item_id):
     """
     Update an item
     :param: category's id, user_id, item's id, new information about item
@@ -89,7 +92,7 @@ def update_item(user_id, data, id, item_id):
     except KeyError:
         raise BadRequestError('Missing Input')
     item = ItemModel.query.filter_by(id=item_id).first()
-    category = CategoryModel.query.filter_by(id=id).first()
+    category = CategoryModel.query.filter_by(id=category_id).first()
     if not category:
         raise NotFoundError('No Category with that ID')
     if not item:
@@ -105,10 +108,10 @@ def update_item(user_id, data, id, item_id):
     raise BadRequestError('This item does not belong to this category')
 
 
-@app.route('/categories/<int:id>/items/<int:item_id>', methods=['DELETE'])
+@app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['DELETE'])
 @token_required
 @get_user_id
-def delete_item(user_id, id, item_id):
+def delete_item(user_id, category_id, item_id):
     """
     Delete an item
     :param: category's id, user_id, item's id
@@ -120,7 +123,7 @@ def delete_item(user_id, id, item_id):
     """
 
     item = ItemModel.query.filter_by(id=item_id).first()
-    category = CategoryModel.query.filter_by(id=id).first()
+    category = CategoryModel.query.filter_by(id=category_id).first()
     if not category:
         raise NotFoundError('No Category with that ID')
     if not item:
