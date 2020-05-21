@@ -1,10 +1,10 @@
 from marshmallow import fields
 from marshmallow.validate import Length
 
-from main.app import ma
+from main.schemas.base import BaseSchema
 
 
-class UserSchema(ma.SQLAlchemySchema):
+class UserSchema(BaseSchema):
     id = fields.Int(dump_only=True)
     username = fields.Str(required=True, validate=Length(min=1, max=45,
                                                          error='Username must have between 1-45 characters.'))
@@ -15,7 +15,7 @@ class UserSchema(ma.SQLAlchemySchema):
         fields = ('id', 'username', 'password')
 
 
-class UserAuthenticationSchema(ma.SQLAlchemySchema):
+class UserAuthenticationSchema(BaseSchema):
     username = fields.Str(required=True, validate=Length(max=45))
     access_token = fields.Str(required=True, dump_only=True)
     id = fields.Int()
