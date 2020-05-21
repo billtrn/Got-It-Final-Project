@@ -80,7 +80,7 @@ def test_add_categories_valid(client, data, status_code):
                     'description': 'After 2000s'
                 },
                 400,
-                'A Category with that name already exists'
+                'A Category with that name already exists.'
         )
     ]
 )

@@ -29,7 +29,7 @@ def get_category(category_id):
 
     category = CategoryModel.query.filter_by(id=category_id).first()
     if not category:
-        raise NotFoundError('No Category with that ID')
+        raise NotFoundError('No Category with that ID.')
 
     return jsonify(CategorySchema().dump(category)), 200
 
@@ -45,7 +45,7 @@ def add_category(data):
     """
 
     if CategoryModel.query.filter_by(name=data['name']).first():
-        raise BadRequestError('A Category with that name already exists')
+        raise BadRequestError('A Category with that name already exists.')
 
     category = CategoryModel(**data)
     category.save_to_db()
