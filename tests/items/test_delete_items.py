@@ -70,3 +70,16 @@ def test_delete_item_with_invalid_token(client):
 
     assert response.status_code == 400
     assert json_response['message'] == 'Invalid Token'
+
+
+def test_delete_item_with_missing_token(client):
+    category_id = 1
+    item_id = random.choice(get_item_ids())
+    response = client.delete(
+        '/categories/{}/items/{}'.format(category_id, item_id),
+        headers=create_request_headers(access_token=None)
+    )
+    json_response = load_decoded_response(response)
+
+    assert response.status_code == 400
+    assert json_response['message'] == 'Missing Token'

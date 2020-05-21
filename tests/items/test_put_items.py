@@ -139,7 +139,7 @@ def test_put_item_with_invalid_data(client, authentication, category_id, item_id
 
 
 def test_put_item_with_invalid_token(client):
-    response = client.delete(
+    response = client.put(
         '/categories/{}/items/{}'.format(1, 1),
         headers=create_request_headers(access_token='a' * 140),
         data=json.dumps({
@@ -151,3 +151,18 @@ def test_put_item_with_invalid_token(client):
 
     assert response.status_code == 400
     assert json_response['message'] == 'Invalid Token'
+
+
+def test_put_item_with_missing_token(client):
+    response = client.put(
+        '/categories/{}/items/{}'.format(1, 1),
+        headers=create_request_headers(access_token=None),
+        data=json.dumps({
+            'name': 'Kong',
+            'description': '2005'
+        })
+    )
+    json_response = load_decoded_response(response)
+
+    assert response.status_code == 400
+    assert json_response['message'] == 'Missing Token'
