@@ -32,7 +32,7 @@ def test_add_categories_valid(client, data, status_code):
     response, json_response = add_categories(client, data)
 
     assert response.status_code == status_code
-    assert all(key in json_response for key in ['id', 'name', 'description']) is True
+    assert all(key in json_response for key in ['id', 'name', 'description', 'created_on']) is True
 
 
 @pytest.mark.parametrize(

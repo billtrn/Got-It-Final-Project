@@ -22,7 +22,7 @@ def get_items(category_id):
     if not category:
         raise NotFoundError('No Category with that ID.')
 
-    return jsonify(ItemSchema(many=True).dump(category.items)), 200
+    return jsonify(ItemSchema(many=True, only=('id', 'name', 'description', 'created_on')).dump(category.items)), 200
 
 
 @app.route('/categories/<int:category_id>/items', methods=['POST'])
@@ -39,11 +39,9 @@ def add_item(user_id, category_id, data):
     if not category:
         raise NotFoundError('No Category with that ID.')
 
-    description = data['description']
-    name = data['name']
-    item = ItemModel(name, description, category_id, user_id)
+    item = ItemModel(category_id=category_id, user_id=user_id, **data)
     item.save_to_db()
-    return jsonify(ItemSchema().dump(item)), 201
+    return jsonify(ItemSchema(only=('id', 'name', 'description', 'created_on')).dump(item)), 201
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['GET'])
@@ -65,7 +63,7 @@ def get_item(category_id, item_id):
     if not item:
         raise NotFoundError('No items with that ID in this category.')
 
-    return jsonify(ItemSchema().dump(item)), 200
+    return jsonify(ItemSchema(only=('id', 'name', 'description', 'created_on')).dump(item)), 200
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['PUT'])
@@ -96,7 +94,7 @@ def update_item(user_id, data, category_id, item_id):
     item.name = data['name']
     item.description = data['description']
     item.save_to_db()
-    return jsonify(ItemSchema().dump(item)), 200
+    return jsonify(ItemSchema(only=('id', 'name', 'description', 'updated_on')).dump(item)), 200
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['DELETE'])

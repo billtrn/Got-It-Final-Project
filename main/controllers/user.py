@@ -48,6 +48,7 @@ def login(data):
              'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
             app.config['SECRET_KEY'])
 
-        authentication = {'username': data['username'], 'access_token': token, 'id': user.id}
+        authentication = {'username': data['username'], 'access_token': token,
+                          'id': user.id, 'created_on': user.created_on}
         return jsonify(UserAuthenticationSchema().dump(authentication)), 200
     raise UnauthorizedError('Invalid credentials.')
