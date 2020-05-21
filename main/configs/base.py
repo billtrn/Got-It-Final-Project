@@ -1,4 +1,4 @@
-class Config(object):
+class Config:
     # SQL Alchemy
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
