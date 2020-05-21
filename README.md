@@ -21,14 +21,14 @@ pip install -r requirements.txt
 #### 3. Setup database
 Create 3 MySQL for 3 different environments for the project: development, production and test. 
 
-After that, go to the corresponding config files, located at ~/Got-It-Final-Project/configs and change the SQLALCHEMY_DATABASE_URI configuration based on this template:
+After that, go to the corresponding config files, located at ~/Got-It-Final-Project/main/configs and change the SQLALCHEMY_DATABASE_URI configuration based on this template:
 ```
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://<username>:<password>@<host>:<port>/<database_name>'
-For example: SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:asdf@localhost:/final_project_dev'
+For example: SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:asdf@localhost:5000/final_project_dev'
 ```
 
 #### 4. Change the configurations (optional)
-Go to ~/FinalProject/configs/base.py and change the SECRET_KEY if you wish.
+Go to ~/Got-It-Final-Project/main/configs/base.py and change the SECRET_KEY if you wish.
 
 ## Starting the server
 In your terminal, run the following command:
