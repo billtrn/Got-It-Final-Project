@@ -16,7 +16,7 @@ class UserSchema(BaseSchema):
 
 
 class UserAuthenticationSchema(BaseSchema):
-    username = fields.Str(required=True, validate=Length(max=45))
+    username = fields.Str(required=True, validate=Length(min=1, max=45))
     access_token = fields.Str(required=True, dump_only=True)
     id = fields.Int()
 
