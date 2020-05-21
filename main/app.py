@@ -23,10 +23,10 @@ def create_tables():
 
 # Register error handler for our Flask app
 @app.errorhandler(BaseError)
-def handle_customized_error(e):
-    return e.messages()
+def handle_customized_error(error):
+    return error.messages()
 
 
 @app.errorhandler(HTTPException)
-def handle_http_error(e):
-    return jsonify(description=e.description), e.code
+def handle_http_error(error):
+    return jsonify(message=error.description), error.code
