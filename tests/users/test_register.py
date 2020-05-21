@@ -78,7 +78,7 @@ def test_register_valid(client, authentication, status_code):
                     'password': 'asdf'
                 },
                 400,
-                'Username must have under 45 characters.'
+                'Username must have between 1-45 characters.'
         ),
         # Test case: Password is too long
         (
@@ -87,7 +87,7 @@ def test_register_valid(client, authentication, status_code):
                     'password': 'billbillbillbillbillbillbillbillbillbillbillbillbillbillbill'
                 },
                 400,
-                'Password must have under 45 characters.'
+                'Password must have between 1-45 characters.'
         ),
     ]
 )

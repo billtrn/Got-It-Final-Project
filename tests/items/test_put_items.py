@@ -89,7 +89,7 @@ def test_put_item_valid(client, authentication, category_id, item_id, data):
                     'description': '2000'
                 },
                 400,
-                'Name must have under 45 characters.'
+                'Name must have between 1-45 characters.'
         ),
         # Test case: Category not found
         (

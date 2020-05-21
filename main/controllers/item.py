@@ -6,8 +6,8 @@ from main.app import app
 from main.models.item import ItemModel
 from main.schemas.item import ItemSchema
 from main.models.category import CategoryModel
-from main.exception import NotFoundError, BadRequestError, ForbiddenError
-from main.helpers import token_required, load_data, get_user_id
+from main.exception import NotFoundError, ForbiddenError
+from main.helpers import token_required, load_data
 
 
 @app.route('/categories/<int:category_id>/items', methods=['GET'])
@@ -28,7 +28,6 @@ def get_items(category_id):
 @app.route('/categories/<int:category_id>/items', methods=['POST'])
 @token_required
 @load_data(ItemSchema)
-@get_user_id
 def add_item(user_id, category_id, data):
     """
     Post a new item to a category
@@ -72,7 +71,6 @@ def get_item(category_id, item_id):
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['PUT'])
 @token_required
 @load_data(ItemSchema)
-@get_user_id
 def update_item(user_id, data, category_id, item_id):
     """
     Update an item
@@ -103,7 +101,6 @@ def update_item(user_id, data, category_id, item_id):
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['DELETE'])
 @token_required
-@get_user_id
 def delete_item(user_id, category_id, item_id):
     """
     Delete an item
@@ -127,4 +124,4 @@ def delete_item(user_id, category_id, item_id):
         raise ForbiddenError('Not allowed to modify this item.')
 
     item.delete_from_db()
-    return json.dumps({'message': 'Item deleted successfully'}), 200
+    return jsonify({'message': 'Item deleted successfully'}), 200

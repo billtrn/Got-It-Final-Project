@@ -14,7 +14,7 @@ class BaseError(Exception):
         self.message = message
 
     def messages(self):
-        return jsonify(message=self.message), self.status_code
+        return jsonify({'message': self.message}), self.status_code
 
 
 class BadRequestError(BaseError):
