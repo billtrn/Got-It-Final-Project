@@ -36,7 +36,7 @@ def test_add_categories_valid(client, data, status_code):
 
 
 @pytest.mark.parametrize(
-    'data, status_code, description',
+    'data, status_code, message',
     [
         # Test case: Incorrect data type for name
         (
@@ -84,8 +84,8 @@ def test_add_categories_valid(client, data, status_code):
         )
     ]
 )
-def test_post_categories_invalid(client, data, status_code, description):
+def test_post_categories_invalid(client, data, status_code, message):
     response, json_response = add_categories(client, data)
 
     assert response.status_code == status_code
-    assert json_response['description'] == description
+    assert json_response['message'] == message

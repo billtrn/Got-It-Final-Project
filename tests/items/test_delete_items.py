@@ -23,7 +23,7 @@ def test_delete_item_valid(client):
 
 
 @pytest.mark.parametrize(
-    'authentication, category_id, item_id, status_code, description',
+    'authentication, category_id, item_id, status_code, message',
     [
         # Test case: Category not found
         (
@@ -51,12 +51,12 @@ def test_delete_item_valid(client):
         ),
     ]
 )
-def test_delete_item_with_invalid_data(client, authentication, category_id, item_id, status_code, description):
+def test_delete_item_with_invalid_data(client, authentication, category_id, item_id, status_code, message):
     response = delete_item(client, authentication=authentication, category_id=category_id, item_id=item_id)
     json_response = load_decoded_response(response)
 
     assert response.status_code == status_code
-    assert json_response['description'] == description
+    assert json_response['message'] == message
 
 
 def test_delete_item_with_invalid_token(client):
@@ -69,4 +69,4 @@ def test_delete_item_with_invalid_token(client):
     json_response = load_decoded_response(response)
 
     assert response.status_code == 400
-    assert json_response['description'] == 'Invalid Token'
+    assert json_response['message'] == 'Invalid Token'

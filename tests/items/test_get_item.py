@@ -21,7 +21,7 @@ def test_get_item_valid(client):
 
 
 @pytest.mark.parametrize(
-    'category_id, item_id, status_code, description',
+    'category_id, item_id, status_code, message',
     [
         # Test case: Category not found
         (
@@ -39,8 +39,8 @@ def test_get_item_valid(client):
         ),
     ]
 )
-def test_get_item_invalid(client, category_id, item_id, status_code, description):
+def test_get_item_invalid(client, category_id, item_id, status_code, message):
     response, json_response = get_item(client, category_id=category_id, item_id=item_id)
 
     assert response.status_code == status_code
-    assert json_response['description'] == description
+    assert json_response['message'] == message

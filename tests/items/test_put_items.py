@@ -42,7 +42,7 @@ def test_put_item_valid(client, authentication, category_id, item_id, data):
 
 
 @pytest.mark.parametrize(
-    'authentication, category_id, item_id, data, status_code, description',
+    'authentication, category_id, item_id, data, status_code, message',
     [
         # Test case: Incorrect data type for name
         (
@@ -129,13 +129,13 @@ def test_put_item_valid(client, authentication, category_id, item_id, data):
         ),
     ]
 )
-def test_put_item_with_invalid_data(client, authentication, category_id, item_id, data, status_code, description):
+def test_put_item_with_invalid_data(client, authentication, category_id, item_id, data, status_code, message):
     response, json_response = put_item(
         client, authentication=authentication,
         category_id=category_id, item_id=item_id, data=data)
 
     assert response.status_code == status_code
-    assert json_response['description'] == description
+    assert json_response['message'] == message
 
 
 def test_put_item_with_invalid_token(client):
@@ -150,4 +150,4 @@ def test_put_item_with_invalid_token(client):
     json_response = load_decoded_response(response)
 
     assert response.status_code == 400
-    assert json_response['description'] == 'Invalid Token'
+    assert json_response['message'] == 'Invalid Token'

@@ -25,7 +25,7 @@ def test_login_valid(client, authentication, status_code):
 
 
 @pytest.mark.parametrize(
-    'authentication, status_code, description',
+    'authentication, status_code, message',
     [
         # Test case: Incorrect data type for username
         (
@@ -81,8 +81,8 @@ def test_login_valid(client, authentication, status_code):
         )
     ]
 )
-def test_login_invalid(client, authentication, status_code, description):
+def test_login_invalid(client, authentication, status_code, message):
     response, json_response = authorize_user(client, authentication)
 
     assert response.status_code == status_code
-    assert json_response['description'] == description
+    assert json_response['message'] == message

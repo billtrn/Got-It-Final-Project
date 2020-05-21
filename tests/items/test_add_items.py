@@ -39,7 +39,7 @@ def test_post_items_valid(client, authentication, category_id, data):
 
 
 @pytest.mark.parametrize(
-    'authentication, category_id, data, status_code, description',
+    'authentication, category_id, data, status_code, message',
     [
         # Test case: Incorrect data type for name
         (
@@ -97,11 +97,11 @@ def test_post_items_valid(client, authentication, category_id, data):
         ),
     ]
 )
-def test_post_items_with_invalid_data(client, authentication, category_id, data, status_code, description):
+def test_post_items_with_invalid_data(client, authentication, category_id, data, status_code, message):
     response, json_response = add_items(client, authentication=authentication, category_id=category_id, data=data)
 
     assert response.status_code == status_code
-    assert json_response['description'] == description
+    assert json_response['message'] == message
 
 
 def test_add_items_invalid_token(client):
@@ -116,7 +116,7 @@ def test_add_items_invalid_token(client):
     json_response = load_decoded_response(response)
 
     assert response.status_code == 400
-    assert json_response['description'] == 'Invalid Token'
+    assert json_response['message'] == 'Invalid Token'
 
 
 def test_add_items_missing_token(client):
@@ -131,4 +131,4 @@ def test_add_items_missing_token(client):
     json_response = load_decoded_response(response)
 
     assert response.status_code == 400
-    assert json_response['description'] == 'Missing Token'
+    assert json_response['message'] == 'Missing Token'
