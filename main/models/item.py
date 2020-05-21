@@ -8,12 +8,12 @@ class ItemModel(db.Model):
     Item Model
     """
 
-    __tablename__ = 'items'
+    __tablename__ = 'item'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(45))
     description = db.Column(db.Text)
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     updated = db.Column(db.DateTime, default=datetime.now,
                         onupdate=datetime.now)
     category = db.relationship('CategoryModel')

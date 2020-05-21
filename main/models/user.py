@@ -6,7 +6,7 @@ class UserModel(db.Model):
     User Model
     """
 
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(45))
     hashed_password = db.Column(db.String(128))
