@@ -20,7 +20,7 @@ def test_register_valid(client, authentication, status_code):
     response, json_response = register_user(client, authentication)
 
     assert response.status_code == status_code
-    assert all(key in json_response for key in ['id', 'username', 'created_on']) is True
+    assert all(key in json_response for key in ['id', 'username', 'created']) is True
     assert any(key in json_response for key in ['password', 'hashed_password']) is False
 
 

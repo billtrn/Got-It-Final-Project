@@ -20,7 +20,7 @@ def test_login_valid(client, authentication, status_code):
     response, json_response = authorize_user(client, authentication)
 
     assert response.status_code == status_code
-    assert all(key in json_response for key in ['access_token', 'username', 'created_on', 'id']) is True
+    assert all(key in json_response for key in ['access_token', 'username', 'created', 'id']) is True
     assert any(key in json_response for key in ['password', 'hashed_password']) is False
 
 

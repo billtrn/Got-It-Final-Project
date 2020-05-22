@@ -1,7 +1,5 @@
 import pytest
 
-from main.app import app
-from main.db import db
 from tests.db_setup import drop_tables, init_categories, init_users, init_items
 from main.controllers.category import *
 from main.controllers.item import *

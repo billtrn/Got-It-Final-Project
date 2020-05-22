@@ -5,6 +5,7 @@ from main.configs import config
 from main.models.category import CategoryModel
 from main.models.item import ItemModel
 from main.models.user import UserModel
+from main.db import db
 
 
 def init_categories():
@@ -28,7 +29,9 @@ def init_categories():
     ]
     for category in categories:
         category_object = CategoryModel(**category)
-        category_object.save_to_db()
+        db.session.add(category_object)
+
+    db.session.commit()
 
 
 def init_users():
@@ -47,11 +50,12 @@ def init_users():
         }
     ]
     for user in users:
-        hashed_password = generate_password_hash(user['password'])
+        hashed_password = generate_password_hash(user.pop('password'))
         user['hashed_password'] = hashed_password
-        del user['password']
         user_object = UserModel(**user)
-        user_object.save_to_db()
+        db.session.add(user_object)
+
+    db.session.commit()
 
 
 def init_items():
@@ -74,7 +78,9 @@ def init_items():
 
     for item in items:
         item_object = ItemModel(category_id=category_id, user_id=user_id, **item)
-        item_object.save_to_db()
+        db.session.add(item_object)
+
+    db.session.commit()
 
 
 def drop_tables():

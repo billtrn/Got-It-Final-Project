@@ -1,6 +1,19 @@
 # Got-It-Final-Project
 
 Final Project for Got It Onboarding Program for Backend Intern. In this web application, users can create categories, post items to categories, and view others' items. This backend structure is created using RESTful APIs built with Python programming language, MySQL database, SQLAlchemy toolkit, and Flask microframework.
+## Prerequisites
+Make sure you have installed all of the following prerequisites on your computer:
+- Python 3.0 or later. 
+You can download different versions of Python here:
+http://www.python.org/getit/
+- MySQL. 
+You can download MySQL here:
+https://dev.mysql.com/downloads/mysql/
+
+- ``pip``. To install ``pip``, run this command in your terminal:
+```
+sudo easy_install pip
+```
 
 ## Installation
 
@@ -31,9 +44,16 @@ For example: SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:asdf@localhost:5000
 Go to ~/Got-It-Final-Project/main/configs/base.py and change the SECRET_KEY if you wish.
 
 ## Starting the server
-In your terminal, run the following command:
+In your terminal, running the following command will start the server in development environment:
 ```
 $ python run.py
+```
+If you want to run in production or test environment, run the following commands:
+```
+Prodution environment:
+$ ENVIRONMENT=production python run.py
+Test environment:
+$ ENVIRONMENT=test python run.py
 ```
 
 

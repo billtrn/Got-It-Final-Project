@@ -1,5 +1,4 @@
 from flask import Flask, jsonify
-from flask_marshmallow import Marshmallow
 from werkzeug.exceptions import HTTPException
 
 from main.configs import config
@@ -12,7 +11,6 @@ app = Flask(__name__)
 app.config.from_object(config)
 # Initialize our Flask app with this database setup
 db.init_app(app)
-ma = Marshmallow(app)
 
 
 # Create all tables specified in the app

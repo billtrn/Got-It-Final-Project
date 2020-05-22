@@ -14,7 +14,7 @@ def test_get_items_valid(client):
     response, json_response = get_items(client, category_id=1)
     assert response.status_code == 200
     for category in json_response:
-        assert all(key in category for key in ['id', 'name', 'description', 'created_on']) is True
+        assert all(key in category for key in ['id', 'name', 'description', 'created', 'user_id']) is True
 
 
 def test_get_items_invalid(client):

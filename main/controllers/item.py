@@ -1,51 +1,44 @@
-import json
-
 from flask import jsonify
 
 from main.app import app
 from main.models.item import ItemModel
 from main.schemas.item import ItemSchema
-from main.models.category import CategoryModel
-from main.exception import NotFoundError, ForbiddenError
-from main.helpers import token_required, load_data
+from main.exception import ForbiddenError
+from main.helpers import token_required, load_data, validate_category, validate_item
+from main.db import db
 
 
 @app.route('/categories/<int:category_id>/items', methods=['GET'])
-def get_items(category_id):
+@validate_category
+def get_items(category, **_):
     """
     Get all items in a category
     :param: category's id
     :return: information about all items in that category. Raise a NotFoundError if cannot find the category
     """
-
-    category = CategoryModel.query.filter_by(id=category_id).first()
-    if not category:
-        raise NotFoundError('No Category with that ID.')
-
-    return jsonify(ItemSchema(many=True, only=('id', 'name', 'description', 'created_on')).dump(category.items)), 200
+    return jsonify(ItemSchema(many=True, only=('id', 'name', 'description', 'created', 'user_id')).dump(category.items))
 
 
 @app.route('/categories/<int:category_id>/items', methods=['POST'])
 @token_required
 @load_data(ItemSchema)
-def add_item(user_id, category_id, data):
+@validate_category
+def add_item(user_id, category_id, data, **_):
     """
     Post a new item to a category
     :param: category's id, user's id, item's information
     :return: created item's information. Raise a NotFoundError if cannot find the category
     """
-
-    category = CategoryModel.query.filter_by(id=category_id).first()
-    if not category:
-        raise NotFoundError('No Category with that ID.')
-
     item = ItemModel(category_id=category_id, user_id=user_id, **data)
-    item.save_to_db()
-    return jsonify(ItemSchema(only=('id', 'name', 'description', 'created_on')).dump(item)), 201
+    db.session.add(item)
+    db.session.commit()
+
+    return jsonify(ItemSchema(only=('id', 'name', 'description', 'created', 'user_id')).dump(item)), 201
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['GET'])
-def get_item(category_id, item_id):
+@validate_item
+def get_item(item, **_):
     """
     Get an item in a category
     :param: category's id, item's id
@@ -53,23 +46,14 @@ def get_item(category_id, item_id):
     Information about the item.
     Raise a NotFoundError if cannot find item or category with that id
     """
-
-    category = CategoryModel.query.filter_by(id=category_id).first()
-    if not category:
-        raise NotFoundError('No Category with that ID.')
-
-    item = ItemModel.query.filter_by(id=item_id, category_id=category_id).first()
-
-    if not item:
-        raise NotFoundError('No items with that ID in this category.')
-
-    return jsonify(ItemSchema(only=('id', 'name', 'description', 'created_on')).dump(item)), 200
+    return jsonify(ItemSchema(only=('id', 'name', 'description', 'created', 'user_id')).dump(item)), 200
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['PUT'])
 @token_required
 @load_data(ItemSchema)
-def update_item(user_id, data, category_id, item_id):
+@validate_item
+def update_item(user_id, data, item, **_):
     """
     Update an item
     :param: category's id, user_id, item's id, new information about item
@@ -78,28 +62,21 @@ def update_item(user_id, data, category_id, item_id):
     Raise a NotFoundError if cannot find item or category with that id
     Raise a ForbiddenError if not allowed to update this item
     """
-
-    category = CategoryModel.query.filter_by(id=category_id).first()
-    if not category:
-        raise NotFoundError('No Category with that ID.')
-
-    item = ItemModel.query.filter_by(id=item_id, category_id=category_id).first()
-
-    if not item:
-        raise NotFoundError('No items with that ID in this category.')
-
     if item.user_id != user_id:
         raise ForbiddenError('Not allowed to modify this item.')
 
     item.name = data['name']
     item.description = data['description']
-    item.save_to_db()
-    return jsonify(ItemSchema(only=('id', 'name', 'description', 'updated_on')).dump(item)), 200
+    db.session.add(item)
+    db.session.commit()
+
+    return jsonify(ItemSchema(only=('id', 'name', 'description', 'updated', 'user_id')).dump(item)), 200
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['DELETE'])
 @token_required
-def delete_item(user_id, category_id, item_id):
+@validate_item
+def delete_item(user_id, item, **_):
     """
     Delete an item
     :param: category's id, user_id, item's id
@@ -108,18 +85,10 @@ def delete_item(user_id, category_id, item_id):
     Raise a NotFoundError if cannot find item or category with that id
     Raise a ForbiddenError if not allowed to delete this item
     """
-
-    category = CategoryModel.query.filter_by(id=category_id).first()
-    if not category:
-        raise NotFoundError('No Category with that ID.')
-
-    item = ItemModel.query.filter_by(id=item_id, category_id=category_id).first()
-
-    if not item:
-        raise NotFoundError('No items with that ID in this category.')
-
     if item.user_id != user_id:
         raise ForbiddenError('Not allowed to modify this item.')
 
-    item.delete_from_db()
+    db.session.delete(item)
+    db.session.commit()
+
     return jsonify({'message': 'Item deleted successfully'}), 200

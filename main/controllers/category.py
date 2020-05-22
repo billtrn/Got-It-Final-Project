@@ -3,8 +3,9 @@ from flask import jsonify
 from main.app import app
 from main.models.category import CategoryModel
 from main.schemas.category import CategorySchema
-from main.exception import NotFoundError, BadRequestError
-from main.helpers import load_data
+from main.exception import BadRequestError
+from main.helpers import load_data, validate_category
+from main.db import db
 
 
 @app.route('/categories', methods=['GET'])
@@ -13,24 +14,19 @@ def get_categories():
     Get all categories
     :return: all categories in json format
     """
-
     categories = CategoryModel.query.all()
     return jsonify(CategorySchema(many=True).dump(categories)), 200
 
 
 @app.route('/categories/<int:category_id>', methods=['GET'])
-def get_category(category_id):
+@validate_category
+def get_category(category, **_):
     """
     Get information about a category
     :param: category's id
     :return: category's name and description in json.
     Raise a NotFoundError if cannot find category with that id
     """
-
-    category = CategoryModel.query.filter_by(id=category_id).first()
-    if not category:
-        raise NotFoundError('No Category with that ID.')
-
     return jsonify(CategorySchema().dump(category)), 200
 
 
@@ -43,10 +39,11 @@ def add_category(data):
     :return: created category's name and description in json
     Raise a BadRequestError if that name already exists
     """
-
-    if CategoryModel.query.filter_by(name=data['name']).first():
+    if CategoryModel.query.filter_by(name=data['name']).one_or_none():
         raise BadRequestError('A Category with that name already exists.')
 
     category = CategoryModel(**data)
-    category.save_to_db()
+    db.session.add(category)
+    db.session.commit()
+
     return jsonify(CategorySchema().dump(category)), 201

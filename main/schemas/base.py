@@ -1,11 +1,9 @@
-from marshmallow import pre_load
-
-from main.app import ma
+from marshmallow import Schema, pre_load
 
 
-class BaseSchema(ma.SQLAlchemySchema):
+class BaseSchema(Schema):
     @pre_load
-    def strip_input(self, data, **kwargs):
+    def strip_input(self, data, **_):
         for key, value in data.items():
             if type(value) is str:
                 data[key] = data[key].strip()
