@@ -3,10 +3,6 @@ from main.db import db
 
 
 class ItemModel(BaseModel):
-    """
-    Item Model
-    """
-
     __tablename__ = 'item'
     name = db.Column(db.String(45))
     description = db.Column(db.Text)
@@ -17,6 +13,3 @@ class ItemModel(BaseModel):
 
     category = db.relationship('CategoryModel')
     user = db.relationship('UserModel')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)

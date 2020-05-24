@@ -23,5 +23,3 @@ def test_get_items_invalid(client):
 
     assert response.status_code == 404
     assert json_response['message'] == 'No Category with that ID.'
-
-

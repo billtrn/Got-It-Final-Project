@@ -85,7 +85,7 @@ def test_put_item_valid(client, authentication, category_id, item_id, data):
                 1,
                 1,
                 {
-                    'name': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                    'name': 'a' * 60,
                     'description': '2000'
                 },
                 400,

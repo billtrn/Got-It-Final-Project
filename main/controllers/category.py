@@ -20,7 +20,7 @@ def get_categories():
 
 @app.route('/categories/<int:category_id>', methods=['GET'])
 @validate_category
-def get_category(category, **_):
+def get_category(category):
     """
     Get information about a category
     :param: category's id

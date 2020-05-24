@@ -78,7 +78,7 @@ def test_post_items_valid(client, authentication, category_id, data):
                 {'username': 'bill', 'password': 'asdf'},
                 1,
                 {
-                    'name': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                    'name': 'a' * 60,
                     'description': '1975'
                 },
                 400,

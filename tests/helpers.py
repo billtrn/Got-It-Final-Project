@@ -1,5 +1,3 @@
-import json
-
 from main.app import app
 from main.db import db
 from main.models.category import CategoryModel
@@ -44,4 +42,4 @@ def load_decoded_response(response):
     :param response
     :return: response in dictionary format
     """
-    return json.loads(response.data.decode('utf-8'))
+    return response.json

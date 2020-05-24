@@ -67,7 +67,7 @@ def test_add_categories_valid(client, data, status_code):
         # Test case: Name is too long
         (
                 {
-                    'name': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                    'name': 'a' * 60,
                     'description': 'asdf'
                 },
                 400,

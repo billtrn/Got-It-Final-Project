@@ -21,7 +21,7 @@ def test_register_valid(client, authentication, status_code):
 
     assert response.status_code == status_code
     assert all(key in json_response for key in ['id', 'username', 'created']) is True
-    assert any(key in json_response for key in ['password', 'hashed_password']) is False
+    assert all(key not in json_response for key in ['password', 'hashed_password']) is True
 
 
 @pytest.mark.parametrize(
@@ -74,7 +74,7 @@ def test_register_valid(client, authentication, status_code):
         # Test case: Username is too long
         (
                 {
-                    'username': 'billbillbillbillbillbillbillbillbillbillbillbillbillbillbill',
+                    'username': 'a' * 60,
                     'password': 'asdf'
                 },
                 400,
@@ -84,7 +84,7 @@ def test_register_valid(client, authentication, status_code):
         (
                 {
                     'username': 'warren',
-                    'password': 'billbillbillbillbillbillbillbillbillbillbillbillbillbillbill'
+                    'password': 'a' * 60
                 },
                 400,
                 'Password must have between 1-45 characters.'

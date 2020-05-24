@@ -44,9 +44,18 @@ def token_required(func):
     def decorated(*args, **kwargs):
         try:
             header = request.headers['Authorization']
-            token = header.split()[1]
-        except (IndexError, KeyError):
+        except KeyError:
             raise BadRequestError('Missing Token')
+
+        auth = header.split()
+        if len(auth) != 2:
+            raise BadRequestError('Invalid Token')
+
+        token_type = auth[0]
+        token = auth[1]
+
+        if token_type != 'Bearer':
+            raise BadRequestError('Token must start with Bearer')
 
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
@@ -72,7 +81,7 @@ def validate_item(func):
         if not category:
             raise NotFoundError('No Category with that ID.')
 
-        item = ItemModel.query.filter_by(id=kwargs['item_id'], category_id=kwargs['category_id']).one_or_none()
+        item = ItemModel.query.filter_by(id=kwargs.pop('item_id'), category_id=kwargs.pop('category_id')).one_or_none()
 
         if not item:
             raise NotFoundError('No items with that ID in this category.')
@@ -91,7 +100,7 @@ def validate_category(func):
 
     @functools.wraps(func)
     def validate(*args, **kwargs):
-        category = CategoryModel.query.get(kwargs['category_id'])
+        category = CategoryModel.query.get(kwargs.pop('category_id'))
         if not category:
             raise NotFoundError('No Category with that ID.')
         return func(category=category, *args, **kwargs)

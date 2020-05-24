@@ -21,7 +21,7 @@ def test_login_valid(client, authentication, status_code):
 
     assert response.status_code == status_code
     assert all(key in json_response for key in ['access_token', 'username', 'created', 'id']) is True
-    assert any(key in json_response for key in ['password', 'hashed_password']) is False
+    assert all(key not in json_response for key in ['password', 'hashed_password']) is True
 
 
 @pytest.mark.parametrize(

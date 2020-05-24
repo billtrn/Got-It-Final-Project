@@ -10,7 +10,7 @@ from main.db import db
 
 @app.route('/categories/<int:category_id>/items', methods=['GET'])
 @validate_category
-def get_items(category, **_):
+def get_items(category):
     """
     Get all items in a category
     :param: category's id
@@ -23,13 +23,13 @@ def get_items(category, **_):
 @token_required
 @load_data(ItemSchema)
 @validate_category
-def add_item(user_id, category_id, data, **_):
+def add_item(user_id, data, category):
     """
     Post a new item to a category
     :param: category's id, user's id, item's information
     :return: created item's information. Raise a NotFoundError if cannot find the category
     """
-    item = ItemModel(category_id=category_id, user_id=user_id, **data)
+    item = ItemModel(category_id=category.id, user_id=user_id, **data)
     db.session.add(item)
     db.session.commit()
 
@@ -38,7 +38,7 @@ def add_item(user_id, category_id, data, **_):
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['GET'])
 @validate_item
-def get_item(item, **_):
+def get_item(item):
     """
     Get an item in a category
     :param: category's id, item's id
@@ -53,7 +53,7 @@ def get_item(item, **_):
 @token_required
 @load_data(ItemSchema)
 @validate_item
-def update_item(user_id, data, item, **_):
+def update_item(user_id, data, item):
     """
     Update an item
     :param: category's id, user_id, item's id, new information about item
@@ -76,7 +76,7 @@ def update_item(user_id, data, item, **_):
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['DELETE'])
 @token_required
 @validate_item
-def delete_item(user_id, item, **_):
+def delete_item(user_id, item):
     """
     Delete an item
     :param: category's id, user_id, item's id
