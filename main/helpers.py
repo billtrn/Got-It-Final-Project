@@ -3,7 +3,6 @@ import functools
 import jwt
 from marshmallow import ValidationError
 from flask import request
-from jwt import InvalidTokenError
 
 from main.exception import BadRequestError, NotFoundError
 from main.app import app
@@ -60,7 +59,7 @@ def token_required(func):
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
             user_id = data['sub']
-        except InvalidTokenError:
+        except jwt.InvalidTokenError:
             raise BadRequestError('Invalid Token')
 
         return func(user_id=user_id, *args, **kwargs)

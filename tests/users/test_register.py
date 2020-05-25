@@ -89,6 +89,15 @@ def test_register_valid(client, authentication, status_code):
                 400,
                 'Password must have between 1-45 characters.'
         ),
+        # Test case: Username contains special characters
+        (
+                {
+                    'username': 'bill@',
+                    'password': 'asdf'
+                },
+                400,
+                'Username must contain only letters and numbers.'
+        )
     ]
 )
 def test_register_invalid(client, authentication, status_code, message):

@@ -11,7 +11,7 @@ def register_user(client, information):
     """
 
     response = client.post(
-        '/register',
+        '/users',
         headers=create_request_headers(),
         data=json.dumps(information)
     )
@@ -27,7 +27,7 @@ def authorize_user(client, authentication):
     """
 
     response = client.post(
-        '/login',
+        '/auth',
         headers=create_request_headers(),
         data=json.dumps(authentication)
     )

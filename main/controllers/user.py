@@ -12,7 +12,7 @@ from main.helpers import load_data
 from main.db import db
 
 
-@app.route('/register', methods=['POST'])
+@app.route('/users', methods=['POST'])
 @load_data(UserSchema)
 def register(data):
     """
@@ -33,7 +33,7 @@ def register(data):
     return jsonify(UserSchema().dump(user)), 201
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/auth', methods=['POST'])
 @load_data(UserSchema)
 def login(data):
     """
