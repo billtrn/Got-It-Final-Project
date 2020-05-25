@@ -17,4 +17,3 @@ class UserAuthenticationSchema(BaseSchema):
     id = fields.Int(dump_only=True)
     username = fields.Str(dump_only=True)
     access_token = fields.Str(dump_only=True)
-    created = fields.DateTime(dump_only=True)

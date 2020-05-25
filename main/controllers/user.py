@@ -55,6 +55,6 @@ def login(data):
         app.config['SECRET_KEY'])
 
     authentication = {'username': data['username'], 'access_token': token,
-                      'id': user.id, 'created': user.created}
+                      'id': user.id}
 
     return jsonify(UserAuthenticationSchema().dump(authentication)), 200
