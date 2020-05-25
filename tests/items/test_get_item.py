@@ -17,7 +17,7 @@ def get_item(client, category_id=None, item_id=None):
 def test_get_item_valid(client):
     response, json_response = get_item(client, category_id=1, item_id=1)
     assert response.status_code == 200
-    assert all(key in json_response for key in ['id', 'name', 'description', 'created', 'user_id']) is True
+    assert all(key in json_response for key in ['id', 'name', 'description', 'created', 'updated', 'user_id']) is True
 
 
 @pytest.mark.parametrize(

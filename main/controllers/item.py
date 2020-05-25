@@ -16,7 +16,7 @@ def get_items(category):
     :param: category's id
     :return: information about all items in that category. Raise a NotFoundError if cannot find the category
     """
-    return jsonify(ItemSchema(many=True, only=('id', 'name', 'description', 'created', 'user_id')).dump(category.items))
+    return jsonify(ItemSchema(many=True).dump(category.items))
 
 
 @app.route('/categories/<int:category_id>/items', methods=['POST'])
@@ -33,7 +33,7 @@ def add_item(user_id, data, category):
     db.session.add(item)
     db.session.commit()
 
-    return jsonify(ItemSchema(only=('id', 'name', 'description', 'created', 'user_id')).dump(item)), 201
+    return jsonify(ItemSchema().dump(item)), 201
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['GET'])
@@ -46,7 +46,7 @@ def get_item(item):
     Information about the item.
     Raise a NotFoundError if cannot find item or category with that id
     """
-    return jsonify(ItemSchema(only=('id', 'name', 'description', 'created', 'user_id')).dump(item)), 200
+    return jsonify(ItemSchema().dump(item)), 200
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['PUT'])
@@ -70,7 +70,7 @@ def update_item(user_id, data, item):
     db.session.add(item)
     db.session.commit()
 
-    return jsonify(ItemSchema(only=('id', 'name', 'description', 'updated', 'user_id')).dump(item)), 200
+    return jsonify(ItemSchema().dump(item)), 200
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['DELETE'])
