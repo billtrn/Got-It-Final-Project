@@ -16,7 +16,7 @@ from tests.actions import authorize_user
         ),
     ]
 )
-def test_login_valid(client, authentication, status_code):
+def test_login_successfully(client, authentication, status_code):
     response, json_response = authorize_user(client, authentication)
 
     assert response.status_code == status_code
@@ -81,7 +81,7 @@ def test_login_valid(client, authentication, status_code):
         )
     ]
 )
-def test_login_invalid(client, authentication, status_code, message):
+def test_fail_to_login(client, authentication, status_code, message):
     response, json_response = authorize_user(client, authentication)
 
     assert response.status_code == status_code

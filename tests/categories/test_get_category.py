@@ -12,7 +12,7 @@ def get_category(client, category_id):
     return response, json_response
 
 
-def test_get_category_valid(client):
+def test_get_category_successfully(client):
     category_id = random.choice(get_category_ids())
     response, json_response = get_category(client, category_id)
 
@@ -20,7 +20,7 @@ def test_get_category_valid(client):
     assert all(key in json_response for key in ['id', 'name', 'description', 'created']) is True
 
 
-def test_get_category_invalid(client):
+def test_fail_to_get_category(client):
     category_id = max(get_category_ids()) + 1
     response, json_response = get_category(client, category_id)
 

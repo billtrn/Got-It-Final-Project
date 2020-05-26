@@ -14,7 +14,7 @@ def get_item(client, category_id=None, item_id=None):
     return response, json_response
 
 
-def test_get_item_valid(client):
+def test_get_item_successfully(client):
     response, json_response = get_item(client, category_id=1, item_id=1)
     assert response.status_code == 200
     assert all(key in json_response for key in ['id', 'name', 'description', 'created', 'updated', 'user_id']) is True
@@ -39,7 +39,7 @@ def test_get_item_valid(client):
         ),
     ]
 )
-def test_get_item_invalid(client, category_id, item_id, status_code, message):
+def test_fail_to_get_item(client, category_id, item_id, status_code, message):
     response, json_response = get_item(client, category_id=category_id, item_id=item_id)
 
     assert response.status_code == status_code

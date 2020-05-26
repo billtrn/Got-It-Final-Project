@@ -16,7 +16,7 @@ from tests.actions import register_user
         ),
     ]
 )
-def test_register_valid(client, authentication, status_code):
+def test_register_successfully(client, authentication, status_code):
     response, json_response = register_user(client, authentication)
 
     assert response.status_code == status_code
@@ -100,7 +100,7 @@ def test_register_valid(client, authentication, status_code):
         )
     ]
 )
-def test_register_invalid(client, authentication, status_code, message):
+def test_fail_to_register(client, authentication, status_code, message):
     response, json_response = register_user(client, authentication)
 
     assert response.status_code == status_code

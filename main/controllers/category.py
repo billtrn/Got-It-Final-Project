@@ -15,7 +15,7 @@ def get_categories():
     :return: all categories in json format
     """
     categories = CategoryModel.query.all()
-    return jsonify(CategorySchema(many=True).dump(categories)), 200
+    return jsonify(CategorySchema(many=True).dump(categories))
 
 
 @app.route('/categories/<int:category_id>', methods=['GET'])
@@ -27,7 +27,7 @@ def get_category(category):
     :return: category's name and description in json.
     Raise a NotFoundError if cannot find category with that id
     """
-    return jsonify(CategorySchema().dump(category)), 200
+    return jsonify(CategorySchema().dump(category))
 
 
 @app.route('/categories', methods=['POST'])

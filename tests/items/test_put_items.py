@@ -33,7 +33,7 @@ def put_item(client, authentication=None, category_id=None, item_id=None, data=N
         )
     ]
 )
-def test_put_item_valid(client, authentication, category_id, item_id, data):
+def test_put_item_successfully(client, authentication, category_id, item_id, data):
     response, json_response = put_item(
         client, authentication=authentication, category_id=category_id, item_id=item_id, data=data)
 
@@ -129,7 +129,7 @@ def test_put_item_valid(client, authentication, category_id, item_id, data):
         ),
     ]
 )
-def test_put_item_with_invalid_data(client, authentication, category_id, item_id, data, status_code, message):
+def test_fail_to_put_item_invalid_data(client, authentication, category_id, item_id, data, status_code, message):
     response, json_response = put_item(
         client, authentication=authentication,
         category_id=category_id, item_id=item_id, data=data)
@@ -138,7 +138,7 @@ def test_put_item_with_invalid_data(client, authentication, category_id, item_id
     assert json_response['message'] == message
 
 
-def test_put_item_with_invalid_token(client):
+def test_fail_to_put_item_invalid_token(client):
     response = client.put(
         '/categories/{}/items/{}'.format(1, 1),
         headers=create_request_headers(access_token='a' * 140),
@@ -153,7 +153,7 @@ def test_put_item_with_invalid_token(client):
     assert json_response['message'] == 'Invalid Token'
 
 
-def test_put_item_with_missing_token(client):
+def test_fail_to_put_item_missing_token(client):
     response = client.put(
         '/categories/{}/items/{}'.format(1, 1),
         headers=create_request_headers(access_token=None),

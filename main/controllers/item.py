@@ -46,7 +46,7 @@ def get_item(item):
     Information about the item.
     Raise a NotFoundError if cannot find item or category with that id
     """
-    return jsonify(ItemSchema().dump(item)), 200
+    return jsonify(ItemSchema().dump(item))
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['PUT'])
@@ -70,7 +70,7 @@ def update_item(user_id, data, item):
     db.session.add(item)
     db.session.commit()
 
-    return jsonify(ItemSchema().dump(item)), 200
+    return jsonify(ItemSchema().dump(item))
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>', methods=['DELETE'])
@@ -91,4 +91,4 @@ def delete_item(user_id, item):
     db.session.delete(item)
     db.session.commit()
 
-    return jsonify({'message': 'Item deleted successfully'}), 200
+    return jsonify({'message': 'Item deleted successfully'})

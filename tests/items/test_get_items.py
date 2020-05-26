@@ -10,14 +10,14 @@ def get_items(client, category_id=None):
     return response, json_response
 
 
-def test_get_items_valid(client):
+def test_get_items_successfully(client):
     response, json_response = get_items(client, category_id=1)
     assert response.status_code == 200
     for category in json_response:
         assert all(key in category for key in ['id', 'name', 'description', 'created', 'updated', 'user_id']) is True
 
 
-def test_get_items_invalid(client):
+def test_fail_to_get_items(client):
     category_id = max(get_category_ids()) + 1
     response, json_response = get_items(client, category_id)
 

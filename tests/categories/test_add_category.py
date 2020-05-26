@@ -28,7 +28,7 @@ def add_categories(client, data):
         ),
     ]
 )
-def test_add_categories_valid(client, data, status_code):
+def test_add_categories_successfully(client, data, status_code):
     response, json_response = add_categories(client, data)
 
     assert response.status_code == status_code
@@ -84,7 +84,7 @@ def test_add_categories_valid(client, data, status_code):
         )
     ]
 )
-def test_post_categories_invalid(client, data, status_code, message):
+def test_fail_to_add_categories(client, data, status_code, message):
     response, json_response = add_categories(client, data)
 
     assert response.status_code == status_code

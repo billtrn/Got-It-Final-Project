@@ -31,7 +31,7 @@ def add_items(client, authentication=None, category_id=None, data=None):
         ),
     ]
 )
-def test_post_items_valid(client, authentication, category_id, data):
+def test_add_items_successfully(client, authentication, category_id, data):
     response, json_response = add_items(client, authentication=authentication, category_id=category_id, data=data)
 
     assert response.status_code == 201
@@ -97,14 +97,14 @@ def test_post_items_valid(client, authentication, category_id, data):
         ),
     ]
 )
-def test_post_items_with_invalid_data(client, authentication, category_id, data, status_code, message):
+def test_fail_to_add_items_invalid_data(client, authentication, category_id, data, status_code, message):
     response, json_response = add_items(client, authentication=authentication, category_id=category_id, data=data)
 
     assert response.status_code == status_code
     assert json_response['message'] == message
 
 
-def test_add_items_invalid_token(client):
+def test_fail_to_add_items_invalid_token(client):
     response = client.post(
         '/categories/{}/items'.format(1),
         headers=create_request_headers(access_token='a' * 140),
@@ -119,7 +119,7 @@ def test_add_items_invalid_token(client):
     assert json_response['message'] == 'Invalid Token'
 
 
-def test_add_items_missing_token(client):
+def test_fail_to_add_items_missing_token(client):
     response = client.post(
         '/categories/{}/items'.format(1),
         headers=create_request_headers(access_token=None),

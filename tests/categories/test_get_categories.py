@@ -1,7 +1,7 @@
 from tests.helpers import create_request_headers, load_decoded_response
 
 
-def test_get_categories_valid(client):
+def test_get_categories_successfully(client):
     response = client.get(
         '/categories',
         headers=create_request_headers(),

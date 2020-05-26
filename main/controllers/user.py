@@ -57,4 +57,4 @@ def login(data):
     authentication = {'username': data['username'], 'access_token': token,
                       'id': user.id}
 
-    return jsonify(UserAuthenticationSchema().dump(authentication)), 200
+    return jsonify(UserAuthenticationSchema().dump(authentication))

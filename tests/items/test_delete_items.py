@@ -15,7 +15,7 @@ def delete_item(client, authentication=None, category_id=None, item_id=None):
     return response
 
 
-def test_delete_item_valid(client):
+def test_delete_item_successfully(client):
     authentication = {'username': 'bill', 'password': 'asdf'}
     response = delete_item(client, authentication=authentication, category_id=1, item_id=1)
 
@@ -51,7 +51,7 @@ def test_delete_item_valid(client):
         ),
     ]
 )
-def test_delete_item_with_invalid_data(client, authentication, category_id, item_id, status_code, message):
+def test_fail_to_delete_item_invalid_data(client, authentication, category_id, item_id, status_code, message):
     response = delete_item(client, authentication=authentication, category_id=category_id, item_id=item_id)
     json_response = load_decoded_response(response)
 
@@ -59,7 +59,7 @@ def test_delete_item_with_invalid_data(client, authentication, category_id, item
     assert json_response['message'] == message
 
 
-def test_delete_item_with_invalid_token(client):
+def test_fail_to_delete_item_invalid_token(client):
     category_id = 1
     item_id = random.choice(get_item_ids())
     response = client.delete(
@@ -72,7 +72,7 @@ def test_delete_item_with_invalid_token(client):
     assert json_response['message'] == 'Invalid Token'
 
 
-def test_delete_item_with_missing_token(client):
+def test_fail_to_delete_item_missing_token(client):
     category_id = 1
     item_id = random.choice(get_item_ids())
     response = client.delete(
