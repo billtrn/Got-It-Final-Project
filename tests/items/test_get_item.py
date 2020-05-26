@@ -2,7 +2,7 @@ import random
 
 import pytest
 
-from tests.helpers import create_request_headers, load_decoded_response, get_category_ids, get_item_ids
+from tests.helpers import create_request_headers, load_decoded_response
 
 
 def get_item(client, category_id=None, item_id=None):
@@ -25,15 +25,15 @@ def test_get_item_successfully(client):
     [
         # Test case: Category not found
         (
-                max(get_category_ids()) + 1,
-                random.choice(get_item_ids()),
+                5,
+                1,
                 404,
                 'No Category with that ID.'
         ),
         # Test case: Item not found
         (
-                random.choice(get_category_ids()),
-                max(get_item_ids()) + 1,
+                1,
+                5,
                 404,
                 'No items with that ID in this category.'
         ),

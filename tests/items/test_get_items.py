@@ -1,4 +1,4 @@
-from tests.helpers import create_request_headers, load_decoded_response, get_category_ids
+from tests.helpers import create_request_headers, load_decoded_response
 
 
 def get_items(client, category_id=None):
@@ -18,8 +18,7 @@ def test_get_items_successfully(client):
 
 
 def test_fail_to_get_items(client):
-    category_id = max(get_category_ids()) + 1
-    response, json_response = get_items(client, category_id)
+    response, json_response = get_items(client, 5)
 
     assert response.status_code == 404
     assert json_response['message'] == 'No Category with that ID.'

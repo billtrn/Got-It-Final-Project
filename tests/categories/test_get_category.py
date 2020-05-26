@@ -1,6 +1,6 @@
 import random
 
-from tests.helpers import create_request_headers, load_decoded_response, get_category_ids
+from tests.helpers import create_request_headers, load_decoded_response
 
 
 def get_category(client, category_id):
@@ -13,16 +13,14 @@ def get_category(client, category_id):
 
 
 def test_get_category_successfully(client):
-    category_id = random.choice(get_category_ids())
-    response, json_response = get_category(client, category_id)
+    response, json_response = get_category(client, 1)
 
     assert response.status_code == 200
     assert all(key in json_response for key in ['id', 'name', 'description', 'created']) is True
 
 
 def test_fail_to_get_category(client):
-    category_id = max(get_category_ids()) + 1
-    response, json_response = get_category(client, category_id)
+    response, json_response = get_category(client, 5)
 
     assert response.status_code == 404
     assert json_response['message'] == 'No Category with that ID.'

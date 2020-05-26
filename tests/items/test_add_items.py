@@ -3,7 +3,7 @@ import json
 import pytest
 
 from tests.actions import get_access_token
-from tests.helpers import create_request_headers, load_decoded_response, get_category_ids
+from tests.helpers import create_request_headers, load_decoded_response
 
 
 def add_items(client, authentication=None, category_id=None, data=None):
@@ -87,7 +87,7 @@ def test_add_items_successfully(client, authentication, category_id, data):
         # Test case: Category not found
         (
                 {'username': 'bill', 'password': 'asdf'},
-                max(get_category_ids()) + 1,
+                5,
                 {
                     'name': 'Titanic',
                     'description': '1999'

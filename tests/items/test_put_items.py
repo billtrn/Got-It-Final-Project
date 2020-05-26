@@ -4,7 +4,7 @@ import random
 import pytest
 
 from tests.actions import get_access_token
-from tests.helpers import create_request_headers, load_decoded_response, get_category_ids, get_item_ids
+from tests.helpers import create_request_headers, load_decoded_response
 
 
 def put_item(client, authentication=None, category_id=None, item_id=None, data=None):
@@ -94,8 +94,8 @@ def test_put_item_successfully(client, authentication, category_id, item_id, dat
         # Test case: Category not found
         (
                 {'username': 'bill', 'password': 'asdf'},
-                max(get_category_ids()) + 1,
-                random.choice(get_item_ids()),
+                5,
+                1,
                 {
                     'name': 'Kong',
                     'description': '2005'
@@ -106,8 +106,8 @@ def test_put_item_successfully(client, authentication, category_id, item_id, dat
         # Test case: Item not found
         (
                 {'username': 'bill', 'password': 'asdf'},
-                random.choice(get_category_ids()),
-                max(get_item_ids()) + 1,
+                1,
+                5,
                 {
                     'name': 'Kong',
                     'description': '2005'
