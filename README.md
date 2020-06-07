@@ -1,5 +1,5 @@
 # Got-It-Final-Project
-
+[![Coverage Status](https://coveralls.io/repos/github/billtrn/Got-It-Final-Project/badge.svg?branch=master)](https://coveralls.io/github/billtrn/Got-It-Final-Project?branch=master)
 Final Project for Got It Onboarding Program for Backend Intern. In this web application, users can create categories, post items to categories, and view others' items. This backend structure is created using RESTful APIs built with Python programming language, MySQL database, SQLAlchemy toolkit, and Flask microframework.
 ## Prerequisites
 Make sure you have installed all of the following prerequisites on your computer:
