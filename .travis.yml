@@ -11,3 +11,6 @@ before_install:
 
 script:
   - ENVIRONMENT=test pytest tests/
+
+after_success:
+- coveralls
